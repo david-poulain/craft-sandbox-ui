@@ -1,6 +1,6 @@
 import {async, ComponentFixture, getTestBed, TestBed} from '@angular/core/testing';
 
-import { UserFormComponent } from './user-form.component';
+import {UserFormComponent} from './user-form.component';
 import {UserService} from '../../services/user.service';
 import {Observable} from 'rxjs';
 import {User} from '../../model/user';
@@ -32,11 +32,11 @@ describe('UserFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('is created', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call service when add with user.', () => {
+  it('calls user service when adding a user', () => {
     component.userCreationRequest.firstName = 'firstname';
     component.userCreationRequest.lastName = 'lastname';
     const spyAddUser = spyOn(service, 'add').and.returnValue(new Observable<User>());
@@ -48,7 +48,7 @@ describe('UserFormComponent', () => {
     expect(spyAddUser).toHaveBeenCalledTimes(1);
   });
 
-  it('should be redirected to /users when user has been added.', () => {
+  it('redirects the user to /users when a user has been added', () => {
     spyOn(service, 'add').and.returnValue(new Observable<User>(
       observer => observer.next(new User(0, 'firstname', 'lastname'))
     ));
@@ -60,26 +60,27 @@ describe('UserFormComponent', () => {
     expect(spyRouter).toHaveBeenCalledTimes(1);
   });
 
-  it('should have an input for firstname"', () => {
+  it('has an input form for firstname"', () => {
     const input = document.getElementById('firstName');
     expect(input.tagName.toLowerCase()).toEqual('input');
     expect(input.getAttribute('type')).toEqual('text');
   });
 
-  it('should have an input for lastname"', () => {
+  it('has an input form for lastname"', () => {
     const input = document.getElementById('lastName');
     expect(input.tagName.toLowerCase()).toEqual('input');
     expect(input.getAttribute('type')).toEqual('text');
   });
 
-  it('should have button to add user"', () => {
+  it('has a button to add a user"', () => {
     const button = document.getElementById('addUser');
 
     expect(button.tagName.toLowerCase()).toEqual('button');
     expect(button.getAttribute('type')).toEqual('submit');
+    expect(button.innerText).toEqual('Add User');
   });
 
-  it('should call add user on click', async(() => {
+  it('has a button "Add User" that calls addUser method on click', async(() => {
     const spyComponent = spyOn(component, 'onSubmit');
 
     const button = document.getElementById('addUser');

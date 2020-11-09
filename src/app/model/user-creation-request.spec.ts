@@ -1,7 +1,7 @@
-import { UserCreationRequest } from './user-creation-request';
+import {UserCreationRequest} from './user-creation-request';
 
 describe('UserCreationRequest', () => {
-  it('should create an instance', () => {
+  it('is created', () => {
     expect(new UserCreationRequest('Harry', 'POTTER')).toBeTruthy();
   });
 });
