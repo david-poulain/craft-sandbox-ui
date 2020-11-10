@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import {UserCreationRequest} from '../../model/user-creation-request';
 
@@ -12,7 +12,6 @@ export class UserFormComponent {
   userCreationRequest: UserCreationRequest;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private userService: UserService) {
     this.userCreationRequest = new UserCreationRequest(null, null);

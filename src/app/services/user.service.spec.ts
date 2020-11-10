@@ -23,22 +23,22 @@ describe('UserService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('calls API /api/v1/user GET method', () => {
+  it('has a method findAll that calls API /api/v1/user GET method', () => {
     service.findAll().subscribe().unsubscribe();
 
-    const http = httpMock.expectOne('http://localhost:8080/api/v1/user');
+    const http = httpMock.expectOne('/api/v1/user');
     expect(http.request.method).toBe('GET');
 
     expect(service).toBeTruthy();
   });
 
-  it('calls API /api/v1/user POST method', () => {
+  it('has a method add that API /api/v1/user POST method', () => {
     const userCreationRequest = new UserCreationRequest('Chuck', 'NORRIS');
     service.add(userCreationRequest)
       .subscribe((request: UserCreationRequest) => expect(request.firstName).toBe('Chuck'))
       .unsubscribe();
 
-    const http = httpMock.expectOne('http://localhost:8080/api/v1/user');
+    const http = httpMock.expectOne('/api/v1/user');
     expect(http.request.method).toBe('POST');
 
     expect(service).toBeTruthy();

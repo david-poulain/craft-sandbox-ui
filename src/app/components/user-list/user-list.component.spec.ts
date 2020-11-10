@@ -37,7 +37,6 @@ describe('UserListComponent', () => {
       observer => observer.next(users)
     ));
     component.ngOnInit();
-    fixture.detectChanges();
   }
 
   beforeEach(async(() => {
@@ -52,10 +51,13 @@ describe('UserListComponent', () => {
     component = fixture.componentInstance;
     injector = getTestBed();
     service = injector.get(UserService);
+
     fixture.detectChanges();
   });
 
   it('is created', () => {
+    mockServiceWithValues([]);
+
     expect(component).toBeTruthy();
   });
 
@@ -75,6 +77,7 @@ describe('UserListComponent', () => {
       new User(0, 'Sarah', 'CONNOR'),
       new User(1, 'John', 'FROM_THE_GARDEN')
     ]);
+    fixture.detectChanges();
 
     expectUserTableData('th', 0, 'Id', 'First Name', 'Last Name');
     expectUserTableData('td', 1, '0', 'Sarah', 'CONNOR');
