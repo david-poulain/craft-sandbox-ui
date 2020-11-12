@@ -1,30 +1,37 @@
-import {async, ComponentFixture, getTestBed, TestBed} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, getTestBed, TestBed} from '@angular/core/testing';
 
 import {UserFormComponent} from './user-form.component';
 import {UserService} from '../../services/user.service';
 import {Observable} from 'rxjs';
 import {User} from '../../model/user';
-import {UserCreationRequest} from '../../model/user-creation-request';
-import {AppModule} from '../../app.module';
 import {Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {deepEqual, instance, mock, verify, when} from 'ts-mockito';
 
 describe('UserFormComponent', () => {
   let injector: TestBed;
-  let service: UserService;
-  let router: Router;
   let component: UserFormComponent;
   let fixture: ComponentFixture<UserFormComponent>;
 
-  beforeEach(async(() => {
+  let serviceMock: UserService;
+  let routerMock: Router;
+
+  beforeEach(() => {
+    serviceMock = mock(UserService);
+    routerMock = mock(Router);
+
     TestBed.configureTestingModule({
-      imports: [AppModule]
+      imports: [FormsModule],
+      declarations: [UserFormComponent],
+      providers: [
+        {provide: UserService, useValue: instance(serviceMock)},
+        {provide: Router, useValue: instance(routerMock)}
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     injector = getTestBed();
-    service = injector.get(UserService);
-    router = injector.get(Router);
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UserFormComponent);
@@ -39,25 +46,21 @@ describe('UserFormComponent', () => {
   it('calls user service when adding a user', () => {
     component.userCreationRequest.firstName = 'firstname';
     component.userCreationRequest.lastName = 'lastname';
-    const spyAddUser = spyOn(service, 'add').and.returnValue(new Observable<User>());
+    when(serviceMock.add(component.userCreationRequest)).thenReturn(new Observable<User>());
 
     component.onSubmit();
 
-    const expected = new UserCreationRequest('firstname', 'lastname');
-    expect(spyAddUser).toHaveBeenCalledWith(expected);
-    expect(spyAddUser).toHaveBeenCalledTimes(1);
+    verify(serviceMock.add(component.userCreationRequest)).once();
   });
 
   it('redirects the user to /users when a user has been added', () => {
-    spyOn(service, 'add').and.returnValue(new Observable<User>(
+    when(serviceMock.add(component.userCreationRequest)).thenReturn(new Observable<User>(
       observer => observer.next(new User(0, 'firstname', 'lastname'))
     ));
-    const spyRouter = spyOn(router, 'navigate');
 
     component.onSubmit();
 
-    expect(spyRouter).toHaveBeenCalledWith(['/users']);
-    expect(spyRouter).toHaveBeenCalledTimes(1);
+    verify(routerMock.navigate(deepEqual(['/users']))).once();
   });
 
   it('has an input form for firstname"', () => {
@@ -80,7 +83,7 @@ describe('UserFormComponent', () => {
     expect(button.innerText).toEqual('Add User');
   });
 
-  it('has a button "Add User" that calls addUser method on click', async(() => {
+  it('has a button "Add User" that calls addUser method on click', fakeAsync(() => {
     const spyComponent = spyOn(component, 'onSubmit');
 
     const button = document.getElementById('addUser');

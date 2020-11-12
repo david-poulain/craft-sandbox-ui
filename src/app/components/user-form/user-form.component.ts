@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import {UserCreationRequest} from '../../model/user-creation-request';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-form',
