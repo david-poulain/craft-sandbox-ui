@@ -1,10 +1,9 @@
-import {getTestBed, TestBed} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {UserService} from './user.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {UserCreationRequest} from '../model/user-creation-request';
 
 describe('UserService', () => {
-  let injector: TestBed;
   let service: UserService;
   let httpMock: HttpTestingController;
 
@@ -13,10 +12,8 @@ describe('UserService', () => {
       imports: [HttpClientTestingModule],
       providers: [UserService]
     });
-    injector = getTestBed();
-    service = injector.get(UserService);
-    httpMock = injector.get(HttpTestingController);
-
+    service = TestBed.inject(UserService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('is created', () => {
