@@ -23,8 +23,9 @@
       </div>
       <div [hidden]="!lastName.pristine" class="alert alert-danger">First name is required</div>
 
-      <button type="submit" id="addUser" [disabled]="!userForm.form.valid"
-              class="btn btn-info">Add User
+      <button [disabled]="!userForm.form.valid"
+              class="btn btn-info" id="addUser"
+              type="submit">Add User
       </button>
     </form>
   </div>

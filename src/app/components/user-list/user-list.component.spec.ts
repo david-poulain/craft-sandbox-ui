@@ -20,9 +20,9 @@ function expectUserTableData<K extends keyof { 'th', 'td' }>(tagOfColumn: K,
   const lines = table.getElementsByTagName('tr');
 
   const headerOnLine0 = lines[index].getElementsByTagName(tagOfColumn);
-  expect(headerOnLine0[0].innerText).toEqual(id);
-  expect(headerOnLine0[1].innerText).toEqual(firstName);
-  expect(headerOnLine0[2].innerText).toEqual(lastName);
+  expect(headerOnLine0[0].textContent).toEqual(id);
+  expect(headerOnLine0[1].textContent).toEqual(firstName);
+  expect(headerOnLine0[2].textContent).toEqual(lastName);
 }
 
 describe('UserListComponent', () => {

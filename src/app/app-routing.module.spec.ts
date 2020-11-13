@@ -3,7 +3,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {appRoutes} from './app-routing.module';
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {Location} from '@angular/common';
+import {APP_BASE_HREF, Location} from '@angular/common';
 import {AppModule} from './app.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
@@ -25,7 +25,8 @@ describe('App-Routing', () => {
         AppModule,
         HttpClientTestingModule
       ],
-      declarations: [TestComponent]
+      declarations: [TestComponent],
+      providers: [{provide: APP_BASE_HREF, useValue: '/'}]
     });
 
     fixture = TestBed.createComponent(TestComponent);
