@@ -81,7 +81,7 @@ describe('UserFormComponent', () => {
     expect(button.tagName.toLowerCase()).toEqual('button');
     expect(button.getAttribute('type')).toEqual('submit');
 
-    expect(button.textContent).toEqual('Add User');
+    expect(button.textContent.trim()).toEqual('Add User');
   });
 
   it('has a button "Add User" that calls addUser method on click', fakeAsync(() => {
